@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
 
 void main() {
   runApp(MyApp());
+}
+
+Future<http.Response> fetchAlbum() {
+  return http.get('https://jsonplaceholder.typicode.com/albums/1');
 }
 
 class MyApp extends StatelessWidget {
