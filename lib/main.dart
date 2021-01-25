@@ -6,6 +6,22 @@ void main() {
   runApp(MyApp());
 }
 
+class Album {
+  final int userId;
+  final int id;
+  final String title;
+
+  Album({this.userId, this.id, this.title});
+
+  factory Album.fromJson(Map<String, dynamic> json) {
+    return Album(
+      userId: json['userId'],
+      id: json['id'],
+      title: json['title'],
+    );
+  }
+}
+
 Future<http.Response> fetchAlbum() {
   return http.get('https://jsonplaceholder.typicode.com/albums/1');
 }
