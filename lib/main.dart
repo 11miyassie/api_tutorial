@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 Future<Album> fetchAlbum() async {
   final response =
-  await http.get('https://jsonplaceholder.typicode.com/albums/1');
+  await http.get('https://connpass.com/api/v1/event/200543/');
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -20,17 +20,15 @@ Future<Album> fetchAlbum() async {
 }
 
 class Album {
-  final int userId;
-  final int id;
+  final int eventId;
   final String title;
 
-  Album({this.userId, this.id, this.title});
+  Album({this.eventId, this.title});
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
-      userId: json['userId'],
-      id: json['id'],
-      title: json['title'],
+      eventId: json['eventId'],
+
     );
   }
 }
