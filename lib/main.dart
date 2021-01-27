@@ -16,13 +16,15 @@ Future<Album> fetchAlbum() async {
 }
 
 class Album {
+  final events;
   final int eventId;
   final String title;
 
-  Album({this.eventId, this.title});
+  Album({this.events, this.eventId, this.title});
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
+      events:
       eventId: json['eventId'],
       title: json['title'],
     );
