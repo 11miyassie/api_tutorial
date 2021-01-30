@@ -16,17 +16,24 @@ Future<Album> fetchAlbum() async {
 }
 
 class Album {
-  final events;
-  final int eventId;
-  final String title;
+  final String resultsReturned;
+  final int resultsAvailable;
+  final int resultsStart;
+  final List events;
 
-  Album({this.events, this.eventId, this.title});
+  Album({
+    this.resultsReturned,
+    this.resultsAvailable,
+    this.resultsStart,
+    this.events,
+  });
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
-      events:
-      eventId: json['eventId'],
-      title: json['title'],
+      resultsReturned: json['results_returned'],
+      resultsAvailable: json['results_available'],
+      resultsStart: json['results_start'],
+      events: json['events'],
     );
   }
 }
@@ -65,7 +72,7 @@ class _MyAppState extends State<MyApp> {
             future: futureAlbum,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Text(snapshot.data.title);
+                return Text(snapshot.data.resultsReturned);
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               }
