@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -16,10 +17,10 @@ Future<Album> fetchAlbum() async {
 }
 
 class Album {
-  final String resultsReturned;
+  final int resultsReturned;
   final int resultsAvailable;
   final int resultsStart;
-  final List events;
+  final List<Event> events;
 
   Album({
     this.resultsReturned,
@@ -34,6 +35,23 @@ class Album {
       resultsAvailable: json['results_available'],
       resultsStart: json['results_start'],
       events: json['events'],
+    );
+  }
+}
+
+class Event {
+  final int eventId;
+  final String title;
+
+  Event({
+    this.eventId,
+    this.title,
+  });
+
+  factory Event.fromJson(Map<String, dynamic> json) {
+    return Event(
+      eventId: json['event_id'],
+      title: json['title'],
     );
   }
 }
@@ -72,7 +90,7 @@ class _MyAppState extends State<MyApp> {
             future: futureAlbum,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Text(snapshot.data.resultsReturned);
+                return Text(snapshot.data.events.title);
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               }
