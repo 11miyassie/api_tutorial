@@ -63,42 +63,36 @@ class Event {
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  MyApp({Key key}) : super(key: key);
-
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  Future<Album> futureAlbum;
-
-  @override
-  void initState() {
-    super.initState();
-    futureAlbum = fetchAlbum();
-  }
+class MyApp extends StatelessWidget {
+  final Event events;
+  MyApp({Key key, this.events}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Fetch Data Example',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('イベント詳細'),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Fetch Data Example'),
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            titlePart(),
+          ],
         ),
-        body: Center(
-          child: Column(
-            children: [
-              Text(
-                Event.title,
-              ),
-            ],
+      ),
+    );
+  }
+
+  Widget titlePart () {
+    print(events);
+    return Container(
+      child: Column(
+        children: [
+          Text(
+            events.title,
           ),
-        ),
+        ],
       ),
     );
   }
