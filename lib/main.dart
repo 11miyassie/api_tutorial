@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -34,7 +33,7 @@ class Album {
       resultsReturned: json['results_returned'],
       resultsAvailable: json['results_available'],
       resultsStart: json['results_start'],
-      events: json['events'],
+      events: json['events'].map<Event>((e) => Event.fromJson(e)).toList()
     );
   }
 }
@@ -54,6 +53,12 @@ class Event {
       title: json['title'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'event_id': eventId,
+    'title': title,
+  };
+
 }
 
 void main() => runApp(MyApp());
@@ -86,21 +91,28 @@ class _MyAppState extends State<MyApp> {
           title: Text('Fetch Data Example'),
         ),
         body: Center(
-          child: FutureBuilder<Album>(
-            future: futureAlbum,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Text(snapshot.data.events.title);
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
-
-              // By default, show a loading spinner.
-              return CircularProgressIndicator();
-            },
+          child: Column(
+            children: [
+              Text(
+                Event.title,
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 }
+
+// child: FutureBuilder<Album>(
+// future: futureAlbum,
+// builder: (context, snapshot) {
+// if (snapshot.hasData) {
+// return Text(snapshot.data.events.title);
+// } else if (snapshot.hasError) {
+// return Text("${snapshot.error}");
+// }
+//
+// // By default, show a loading spinner.
+// return CircularProgressIndicator();
+// },
