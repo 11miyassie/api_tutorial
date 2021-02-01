@@ -4,32 +4,32 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-Future<Album> fetchAlbum() async {
+Future<Connpass> fetchConnpass() async {
   final response =
-  await http.get('https://connpass.com/api/v1/event/?keyword=python');
+  await http.get('https://connpass.com/api/v1/event/?event_id=201351');
 
   if (response.statusCode == 200) {
-    return Album.fromJson(jsonDecode(response.body));
+    return Connpass.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to load album');
+    throw Exception('失敗');
   }
 }
 
-class Album {
+class Connpass {
   final int resultsReturned;
   final int resultsAvailable;
   final int resultsStart;
   final List<Event> events;
 
-  Album({
+  Connpass({
     this.resultsReturned,
     this.resultsAvailable,
     this.resultsStart,
     this.events,
   });
 
-  factory Album.fromJson(Map<String, dynamic> json) {
-    return Album(
+  factory Connpass.fromJson(Map<String, dynamic> json) {
+    return Connpass(
       resultsReturned: json['results_returned'],
       resultsAvailable: json['results_available'],
       resultsStart: json['results_start'],
@@ -58,14 +58,13 @@ class Event {
     'event_id': eventId,
     'title': title,
   };
-
 }
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  final Event events;
-  MyApp({Key key, this.events}) : super(key: key);
+  final Event event;
+  MyApp({Key key, this.event}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -77,20 +76,19 @@ class MyApp extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            titlePart(),
+            titleView(),
           ],
         ),
       ),
     );
   }
 
-  Widget titlePart () {
-    print(events);
+  Widget titleView () {
     return Container(
       child: Column(
         children: [
           Text(
-            events.title,
+            Event.title,
           ),
         ],
       ),
@@ -106,7 +104,6 @@ class MyApp extends StatelessWidget {
 // } else if (snapshot.hasError) {
 // return Text("${snapshot.error}");
 // }
-//
-// // By default, show a loading spinner.
+
 // return CircularProgressIndicator();
 // },
