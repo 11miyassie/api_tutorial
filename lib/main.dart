@@ -63,7 +63,7 @@ class Event {
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  final Event event;
+  final List<Event> event;
   MyApp({Key key, this.event}) : super(key: key);
 
   @override
@@ -88,22 +88,10 @@ class MyApp extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            Event.title,
+            'aa'
           ),
         ],
       ),
     );
   }
 }
-
-// child: FutureBuilder<Album>(
-// future: futureAlbum,
-// builder: (context, snapshot) {
-// if (snapshot.hasData) {
-// return Text(snapshot.data.events.title);
-// } else if (snapshot.hasError) {
-// return Text("${snapshot.error}");
-// }
-
-// return CircularProgressIndicator();
-// },
