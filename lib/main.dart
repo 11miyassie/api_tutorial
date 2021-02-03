@@ -15,6 +15,17 @@ Future<Connpass> fetchConnpass() async {
   }
 }
 
+Future<Event> fetchEvent() async {
+  final response =
+  await http.get('https://connpass.com/api/v1/event/?event_id=201351');
+
+  if (response.statusCode == 200) {
+    return Event.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('失敗');
+  }
+}
+
 class Connpass {
   final int resultsReturned;
   final int resultsAvailable;
@@ -62,35 +73,53 @@ class Event {
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   final List<Event> event;
+
   MyApp({Key key, this.event}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('イベント詳細'),
-      ),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            titleView(),
-          ],
-        ),
-      ),
-    );
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Future<Connpass> futureConnpass;
+  Future<Event> futureEvent;
+
+
+  @override
+  void initState() {
+    super.initState();
+    futureConnpass = fetchConnpass();
+    futureEvent = fetchEvent();
+
   }
 
-  Widget titleView () {
-    return Container(
-      child: Column(
-        children: [
-          Text(
-            'aa'
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'api of connpass',
+      theme: ThemeData(
+        primarySwatch: Colors.yellow
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('イベント詳細'),
+        ),
+        body: Center(
+          child: FutureBuilder<Event>(
+            future: futureEvent,
+            builder: (context, eventname) {
+              if (eventname.hasData) {
+                return Text(eventname.data.title);
+              } else if (eventname.hasError) {
+                return Text("${eventname.error}");
+              }
+
+              return CircularProgressIndicator();
+            },
           ),
-        ],
+        ),
       ),
     );
   }
