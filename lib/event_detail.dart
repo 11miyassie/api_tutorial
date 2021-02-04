@@ -10,4 +10,8 @@ class EventDetail {
       title: json['title'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'title': title,
+  };
 }

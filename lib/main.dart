@@ -32,7 +32,10 @@ Future<EventDetail> fetchEventDetail() async {
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
-  MyApp({Key key}) : super(key: key);
+  final String title;
+
+
+  MyApp({Key key, this.title}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -41,6 +44,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Future<Connpass> futureConnpass;
   Future<EventDetail> futureEventDetail;
+
 
   @override
   void initState() {
