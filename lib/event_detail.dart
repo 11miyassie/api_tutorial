@@ -1,14 +1,12 @@
-class Event {
-  final int eventId;
+class EventDetail {
   final String title;
 
-  Event({
-    this.eventId,
+  EventDetail({
     this.title,
   });
 
-  factory Event.fromJson(Map<String, dynamic> json) {
-    return Event(
+  factory EventDetail.fromJson(Map<String, dynamic> json) {
+    return EventDetail(
       title: json['title'],
     );
   }
