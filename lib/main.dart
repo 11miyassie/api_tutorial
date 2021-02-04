@@ -4,6 +4,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:api_tutorial/event.dart';
+import 'package:api_tutorial/connpass.dart';
+
 Future<Connpass> fetchConnpass() async {
   final response =
   await http.get('https://connpass.com/api/v1/event/?event_id=201351');
@@ -26,57 +29,14 @@ Future<Event> fetchEvent() async {
   }
 }
 
-class Connpass {
-  final int resultsReturned;
-  final int resultsAvailable;
-  final int resultsStart;
-  final List<Event> events;
-
-  Connpass({
-    this.resultsReturned,
-    this.resultsAvailable,
-    this.resultsStart,
-    this.events,
-  });
-
-  factory Connpass.fromJson(Map<String, dynamic> json) {
-    return Connpass(
-      resultsReturned: json['results_returned'],
-      resultsAvailable: json['results_available'],
-      resultsStart: json['results_start'],
-      events: json['events'].map<Event>((e) => Event.fromJson(e)).toList()
-    );
-  }
-}
-
-class Event {
-  final int eventId;
-  final String title;
-
-  Event({
-    this.eventId,
-    this.title,
-  });
-
-  factory Event.fromJson(Map<String, dynamic> json) {
-    return Event(
-      eventId: json['event_id'],
-      title: json['title'],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-    'event_id': eventId,
-    'title': title,
-  };
-}
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
-  final List<Event> event;
+  final List<Event> events;
+  final String title;
 
-  MyApp({Key key, this.event}) : super(key: key);
+
+  MyApp({Key key, this.events, this.title}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
