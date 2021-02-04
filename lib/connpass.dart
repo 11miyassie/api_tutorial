@@ -14,12 +14,15 @@ class Connpass {
   });
 
   factory Connpass.fromJson(Map<String, dynamic> json) {
+    events: EventDetail.fromJson(json['events']);
+    var list = json['events'] as List;
+    List<EventDetail> eventsList = list.map((e) => EventDetail.fromJson(e)).toList();
+
     return Connpass(
         resultsReturned: json['results_returned'],
         resultsAvailable: json['results_available'],
         resultsStart: json['results_start'],
-        events: json['events'] != null
-          ? json['events'].map<EventDetail>((e) => EventDetail.fromJson(e)).toList()
-          : null);
+        events: json['events'],
+    );
   }
 }
