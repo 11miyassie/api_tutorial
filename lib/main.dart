@@ -10,6 +10,7 @@ import 'package:api_tutorial/connpass.dart';
 Future<Connpass> fetchConnpass() async {
   final response =
   await http.get('https://connpass.com/api/v1/event/?event_id=201351');
+  print('${jsonDecode(response.body)['events'][0]['title']}');
 
   if (response.statusCode == 200) {
     return Connpass.fromJson(jsonDecode(response.body));
@@ -32,10 +33,7 @@ Future<EventDetail> fetchEventDetail() async {
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
-  final String title;
-
-
-  MyApp({Key key, this.title}) : super(key: key);
+  MyApp({Key key}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -70,10 +68,11 @@ class _MyAppState extends State<MyApp> {
             future: futureEventDetail,
             builder: (context, eventname) {
               if (eventname.hasData) {
-                return Text(eventname.data.title);
+                return Text('あ');
               } else if (eventname.hasError) {
                 return Text("${eventname.error}");
               }
+              // print('${jsonDecode(response.body)['events'][0]['title']}');
 
               return CircularProgressIndicator();
             },

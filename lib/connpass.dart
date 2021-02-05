@@ -18,8 +18,7 @@ class Connpass {
         resultsReturned: json['results_returned'],
         resultsAvailable: json['results_available'],
         resultsStart: json['results_start'],
-        events: json['events'] != null
-          ? json['events'].map<EventDetail>((e) => EventDetail.fromJson(e)).toList()
-          : null);
+        events: json['events']
+    );
   }
 }
