@@ -1,24 +1,24 @@
-import 'package:api_tutorial/event_detail.dart';
+import 'package:api_tutorial/event_repository.dart';
 
-class Connpass {
+class ConnpassRepository {
   final int resultsReturned;
   final int resultsAvailable;
   final int resultsStart;
-  final List<EventDetail> events;
+  final List<EventRepository> events;
 
-  Connpass({
+  ConnpassRepository({
     this.resultsReturned,
     this.resultsAvailable,
     this.resultsStart,
     this.events,
   });
 
-  factory Connpass.fromJson(Map<String, dynamic> json) {
-    return Connpass(
+  factory ConnpassRepository.fromJson(Map<String, dynamic> json) {
+    return ConnpassRepository(
         resultsReturned: json['results_returned'],
         resultsAvailable: json['results_available'],
         resultsStart: json['results_start'],
-        events: json['events']
+        events: json['events'].map<EventRepository>((e) => EventRepository.fromJson(e)).toList()
     );
   }
 }

@@ -4,27 +4,26 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:api_tutorial/event_detail.dart';
-import 'package:api_tutorial/connpass.dart';
+import 'package:api_tutorial/event_repository.dart';
+import 'package:api_tutorial/connpass_repository.dart';
 
-Future<Connpass> fetchConnpass() async {
+Future<ConnpassRepository> fetchConnpassRepository() async {
   final response =
   await http.get('https://connpass.com/api/v1/event/?event_id=201351');
-  print('${jsonDecode(response.body)['events'][0]['title']}');
 
   if (response.statusCode == 200) {
-    return Connpass.fromJson(jsonDecode(response.body));
+    return ConnpassRepository.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('失敗');
   }
 }
 
-Future<EventDetail> fetchEventDetail() async {
+Future<EventRepository> fetchEventRepository() async {
   final response =
   await http.get('https://connpass.com/api/v1/event/?event_id=201351');
 
   if (response.statusCode == 200) {
-    return EventDetail.fromJson(jsonDecode(response.body));
+    return EventRepository.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('失敗');
   }
@@ -40,16 +39,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Future<Connpass> futureConnpass;
-  Future<EventDetail> futureEventDetail;
-
+  Future<ConnpassRepository> futureConnpassRepository;
+  Future<EventRepository> futureEventRepository;
 
   @override
   void initState() {
     super.initState();
-    futureConnpass = fetchConnpass();
-    futureEventDetail = fetchEventDetail();
-
+    futureConnpassRepository = fetchConnpassRepository();
+    futureEventRepository = fetchEventRepository();
   }
 
   @override
@@ -64,8 +61,8 @@ class _MyAppState extends State<MyApp> {
           title: Text('イベント詳細'),
         ),
         body: Center(
-          child: FutureBuilder<EventDetail>(
-            future: futureEventDetail,
+          child: FutureBuilder<EventRepository>(
+            future: futureEventRepository,
             builder: (context, eventname) {
               if (eventname.hasData) {
                 return Text('あ');
@@ -73,7 +70,7 @@ class _MyAppState extends State<MyApp> {
                 return Text("${eventname.error}");
               }
               // print('${jsonDecode(response.body)['events'][0]['title']}');
-
+              // ${jsonDecode(eventname.data.events)}
               return CircularProgressIndicator();
             },
           ),

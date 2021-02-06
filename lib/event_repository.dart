@@ -1,12 +1,12 @@
-class EventDetail {
+class EventRepository {
   final String title;
 
-  EventDetail({
+  EventRepository({
     this.title,
   });
 
-  factory EventDetail.fromJson(Map<String, dynamic> json) {
-    return EventDetail(
+  factory EventRepository.fromJson(Map<String, dynamic> json) {
+    return EventRepository(
       title: json['title'],
     );
   }
