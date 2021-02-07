@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
             future: futureEventRepository,
             builder: (context, eventname) {
               if (eventname.hasData) {
-                return Text('あ');
+                return Text(eventname.data.title.toString());
               } else if (eventname.hasError) {
                 return Text("${eventname.error}");
               }
