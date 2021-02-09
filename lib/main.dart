@@ -13,7 +13,7 @@ Future<ConnpassRepository> fetchConnpassRepository() async {
   print('${jsonDecode(response.body)['events'][0]['title']}');
 
   if (response.statusCode == 200) {
-    return ConnpassRepository.fromJson(jsonDecode(response.body)['events'][0]['title']);
+    return ConnpassRepository.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('失敗');
   }
