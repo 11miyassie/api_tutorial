@@ -19,10 +19,28 @@ Future<ConnpassRepository> fetchConnpassRepository() async {
   }
 }
 
-void main() => runApp(MyApp());
+void main() => runApp(MyHomePage());
+
+class MyHomePage extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Connpass API App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: MyApp(title: 'Connpassイベント検索アプリ'),
+    );
+  }
+}
 
 class MyApp extends StatefulWidget {
-  MyApp({Key key}) : super(key: key);
+  MyApp({Key key, this.title}) : super(key: key);
+
+  final String title;
 
   @override
   _MyAppState createState() => _MyAppState();
