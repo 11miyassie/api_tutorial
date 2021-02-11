@@ -7,22 +7,9 @@ import 'package:http/http.dart' as http;
 import 'package:api_tutorial/event_repository.dart';
 import 'package:api_tutorial/connpass_repository.dart';
 
-Future<ConnpassRepository> fetchConnpassRepository() async {
-  final response =
-  await http.get('https://connpass.com/api/v1/event/?event_id=201351');
-  print('${jsonDecode(response.body)['events'][0]['title']}');
-
-  if (response.statusCode == 200) {
-    return ConnpassRepository.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception('失敗');
-  }
-}
-
 void main() => runApp(MyHomePage());
 
 class MyHomePage extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,7 +19,7 @@ class MyHomePage extends StatelessWidget {
 
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyApp(title: 'Connpassイベント検索アプリ'),
+      home: MyApp(title: 'Connpassアプリ'),
     );
   }
 }
@@ -48,6 +35,18 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Future<ConnpassRepository> futureConnpassRepository;
+
+  Future<ConnpassRepository> fetchConnpassRepository() async {
+    final response =
+    await http.get('https://connpass.com/api/v1/event/?event_id=201351');
+    print('${jsonDecode(response.body)['events'][0]['title']}');
+
+    if (response.statusCode == 200) {
+      return ConnpassRepository.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('失敗');
+    }
+  }
 
   @override
   void initState() {
