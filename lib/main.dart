@@ -14,11 +14,6 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Connpass API App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
       home: MyApp(title: 'Connpassアプリ'),
     );
   }
@@ -38,7 +33,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<ConnpassRepository> fetchConnpassRepository() async {
     final response =
-    await http.get('https://connpass.com/api/v1/event/?event_id=201351');
+        await http.get('https://connpass.com/api/v1/event/?event_id=201351');
     print('${jsonDecode(response.body)['events'][0]['title']}');
 
     if (response.statusCode == 200) {
@@ -58,9 +53,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'api of connpass',
-      theme: ThemeData(
-        primarySwatch: Colors.yellow
-      ),
+      theme: ThemeData(primarySwatch: Colors.yellow),
       home: Scaffold(
         appBar: AppBar(
           title: Text('イベント詳細'),
