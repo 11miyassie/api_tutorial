@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<ConnpassRepository> fetchConnpassRepository() async {
     final response =
-        await http.get('https://connpass.com/api/v1/event/?event_id=201351');
+        await http.get('https://connpass.com/api/v1/event/?keyword=python');
     print('${jsonDecode(response.body)['events'][0]['title']}');
 
     if (response.statusCode == 200) {
@@ -61,11 +61,11 @@ class _MyAppState extends State<MyApp> {
         body: Center(
           child: FutureBuilder<ConnpassRepository>(
             future: futureConnpassRepository,
-            builder: (context, eventname) {
-              if (eventname.hasData) {
-                return Text('a');
-              } else if (eventname.hasError) {
-                return Text("${eventname.error}");
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Text(snapshot.data.events[0].title);
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
               }
               // ${jsonDecode(eventname.data.events)}
               return CircularProgressIndicator();
