@@ -30,18 +30,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Future<ConnpassRepository> futureConnpassRepository;
 
-  Future<ConnpassRepository> fetchConnpassRepository() async {
-    final response =
-        await http.get('https://connpass.com/api/v1/event/?keyword=python');
-    print('${jsonDecode(response.body)['events'][0]['title']}');
-
-    if (response.statusCode == 200) {
-      return ConnpassRepository.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('失敗');
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -72,5 +60,17 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+}
+
+Future<ConnpassRepository> fetchConnpassRepository() async {
+  final response =
+  await http.get('https://connpass.com/api/v1/event/?keyword=python');
+  print('${jsonDecode(response.body)['events'][0]['title']}');
+
+  if (response.statusCode == 200) {
+    return ConnpassRepository.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('失敗');
   }
 }
