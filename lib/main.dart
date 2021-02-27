@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:api_tutorial/event_repository.dart';
 import 'package:api_tutorial/connpass_repository.dart';
 
 void main() => runApp(MyHomePage());
@@ -67,7 +66,6 @@ class _MyAppState extends State<MyApp> {
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               }
-              // ${jsonDecode(eventname.data.events)}
               return CircularProgressIndicator();
             },
           ),
